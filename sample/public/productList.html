@@ -27,18 +27,15 @@ $(document).ready(function() {
 	  	var id = $(this).attr('id');
 	  	var prd_id = $(this).attr('alt');
 	  	if(id.indexOf('DEL') == 0) {
-	  		alert('Will delete ' + prd_id);
 	  		//do delete and refresh page
 	  		$.ajax({url:'/products/' + prd_id,type:'delete',data:{id: id}}).done(function(data){
 	  			//alert(data);
 	  			document.location = '/productList.html';
 	  		});
 	  	} else if(id.indexOf('UPD') == 0) {
-	  		alert('Will update ' + prd_id);
 	  		//do update and refresh page
 	  		var v = $('#AMO-' + prd_id).val();
 	  		$.ajax({url:'/products',type:'put',data:{id:prd_id, amount:v}}).done(function(data){
-	  			//alert(data);
 	  			document.location = '/productList.html';
 	  		});
 

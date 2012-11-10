@@ -89,10 +89,19 @@ app.get('/account', ensureAuthenticated, function(req, res){
   res.end('Get user information:' + JSON.stringify(req.user));
 });
 
+/* for list all product */
 app.get('/products', dbroutes.getProducts);
+
+/* for list one product using product id*/
 app.get('/products/:id', dbroutes.getProductById);
+
+/* for delete one product record */
 app.del('/products/:id', dbroutes.delProductById);
+
+/* for create one product */
 app.post('/products', dbroutes.createProduct);
+
+/* for update one record */
 app.put('/products', dbroutes.updateProductAmountById);
 
 

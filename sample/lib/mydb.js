@@ -13,14 +13,17 @@ var mysql = new require('mysql')
 var script = {
   "getProductById":
     function(id, callback) {
+      console.log('List products by id...' + id);
       db.query('select * from tb_product where id = ?', [id], callback)
     },
   "getProducts":
     function(callback) {
+      console.log('List all products...');
       db.query('select * from tb_product ', callback);
     },
   "createProduct":
     function(vo, callback){
+      console.log('Will create product:' + JSON.stringify(vo));
       db.query(
        'insert into tb_product (product_name, product_descript, amount, update_date, update_user) values (?,?,?,?,now())',
        [vo.product_name, vo.product_descript, vo.amount, vo.update_date, vo.update_user], callback);
@@ -34,6 +37,7 @@ var script = {
     },
   "delProductById":
     function(id, callback){
+      console.log('Will delete product:%s', id);
       db.query('delete from tb_product where id = ?', [id], callback);
     }
 }
