@@ -1,4 +1,4 @@
-var util = require('util')                                                                                                                                
+var util = require('util')
   , cradle = require('cradle')
   , dbusername = 'admin'
   , dbpassword = 'nko2012'
@@ -18,43 +18,44 @@ var doc2 = {phone:"2234", mail:"simonsu@mitac.com.tw"};
 var rev = '2-d22467d07b631c884c3a702def244016';
 
 var script = {
-	"C": //Create Record
-	function() {
-		db.save(id, doc, function(err, res){
-			if(err) console.log(err);
-			console.log(res);
-		});
-	},
-	"R": //Read Record
-	function() {
-		console.log('Query of %s', id);
-		db.get( id, function (err, doc) {
-			if(err) console.log(err);
-			console.log(doc);
-		});
-	}, 
-	"View": //Read View
-	function() {
-		console.log('Query of %s', id);
-		db.view( 'domain/userDomain',{key: userid}, function (err, doc) {
-			if(err) console.log(err);
-			console.log(res);
-		});
-	}, 
-	"U": //Update Record
-	function() {
-		db.merge(id, doc2, function (err, res) {
-			if(err) console.log(err);
-			console.log(res);
-		});
-	},
-	"D": //Delete Record
-	function() {
-		db.remove(id, rev, function(err, res){
-			if(err) console.log(err);
-			console.log(res);
-		})
-	}
+        "C": //Create Record
+        function() {
+                db.save(id, doc, function(err, res){
+                        if(err) console.log('[ERROR]%s',JSON.stringify(err));
+                        console.log('Got response....' + res);
+                });
+        },
+        "R": //Read Record
+        function() {
+                console.log('Query of %s', id);
+                db.get( id, function (err, doc) {
+                        if(err) console.log('[ERROR]%s',JSON.stringify(err));
+                        console.log('Got document....' + doc);
+                });
+        },
+        "View": //Read View ... need to create view first
+        function() {
+                console.log('Query of %s', id);
+                db.view( 'domain/userDomain',{key: userid}, function (err, doc) {
+                        if(err) console.log('[ERROR]%s',JSON.stringify(err));
+                        console.log('Got documents from view...' + doc);
+                });
+        },
+        "U": //Update Record
+        function() {
+                db.merge(id, doc2, function (err, res) {
+                        if(err) console.log('[ERROR]%s',JSON.stringify(err));
+                        console.log('Got response....' + res);
+                });
+        },
+        "D": //Delete Record
+        function() {
+                var rev = process.argv[3];
+                db.remove(id, rev, function(err, res){
+                        if(err) console.log('[ERROR]%s',JSON.stringify(err));
+                        console.log('Got response....' + res);
+                })
+        }
 }
 
 script[process.argv[2]]();
