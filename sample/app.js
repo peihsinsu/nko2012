@@ -89,9 +89,12 @@ app.get('/account', ensureAuthenticated, function(req, res){
   res.end('Get user information:' + JSON.stringify(req.user));
 });
 
-app.get('/posts', dbroutes.getPosts);
-app.get('/posts/:id', dbroutes.getPostById);
-app.post('/posts', dbroutes.createPost);
+app.get('/products', dbroutes.getProducts);
+app.get('/products/:id', dbroutes.getProductById);
+app.del('/products/:id', dbroutes.delProductById);
+app.post('/products', dbroutes.createProduct);
+app.put('/products', dbroutes.updateProductAmountById);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

@@ -11,29 +11,30 @@ var mysql = new require('mysql')
   , db = mysql.createConnection(db_options);
 
 var script = {
-  "getPostById":
+  "getProductById":
     function(id, callback) {
-      db.query('select * from tb_post where id = ?', [id], callback)
+      db.query('select * from tb_product where id = ?', [id], callback)
     },
-  "getPosts":
+  "getProducts":
     function(callback) {
-      db.query('select * from tb_post ', callback);
+      db.query('select * from tb_product ', callback);
     },
-  "createPost":
+  "createProduct":
     function(vo, callback){
       db.query(
-       'insert into tb_post (refer_topic_id, topic_title, post_body, create_user, create_date) values (?,?,?,?,now())',
-       [vo.refer_topic_id, vo.topic_title, vo.post_body, vo.create_user], callback);
+       'insert into tb_product (product_name, product_descript, amount, update_date, update_user) values (?,?,?,?,now())',
+       [vo.product_name, vo.product_descript, vo.amount, vo.update_date, vo.update_user], callback);
     },
-  "updatePostTitleById":
-    function(id, title, callback){
+  "updateProductAmountById":
+    function(vo, callback){
+      console.log('Will update %s amount to %s', vo.id, vo.amount);
       db.query(
-        'update tb_post set topic_title = ? where id = ?',
-        [title, id], callback);
+        'update tb_product set amount = ? where id = ?',
+        [vo.amount, vo.id], callback);
     },
-  "deletePostById":
+  "delProductById":
     function(id, callback){
-      db.query('delete from tb_post where id = ?', [id], callback);
+      db.query('delete from tb_product where id = ?', [id], callback);
     }
 }
 

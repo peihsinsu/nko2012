@@ -1,0 +1,54 @@
+<html>
+<head>
+<script src="/javascripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function() {
+	$.getJSON('/products', function(data) {
+	  var items = [];
+	  $.each(data, function(i, v) {
+	    var html = ('<li id="' + v.id + '">' + v.product_name + '<br/>Descript: ' + v.product_descript + '<br/>Amount: ' + v.amount );
+	    html += '&nbsp;/&nbsp;	Update:<input type="text" size="3" id="AMO-' + v.id + '"/><br/>';
+	    html += '</li>';
+
+	    items.push(html);
+	  });
+
+	  $('<ul/>', {
+	    'class': 'my-new-list',
+	    html: items.join('')
+	  }).appendTo('body');
+
+	  $.each($('li'), function(){
+	  	$(this).append('<input type="button" alt="' + $(this).attr('id') + '" id="UPD-' + $(this).attr('id') + '" value="Update"/>');
+	  	$(this).append('<input type="button" alt="' + $(this).attr('id') + '" id="DEL-' + $(this).attr('id') + '" value="Delete"/>');
+	  });
+
+	  $('input[type=button]').live('click', function(){
+	  	var id = $(this).attr('id');
+	  	var prd_id = $(this).attr('alt');
+	  	if(id.indexOf('DEL') == 0) {
+	  		alert('Will delete ' + prd_id);
+	  		//do delete and refresh page
+	  		$.ajax({url:'/products/' + prd_id,type:'delete',data:{id: id}}).done(function(data){
+	  			//alert(data);
+	  			document.location = '/productList.html';
+	  		});
+	  	} else if(id.indexOf('UPD') == 0) {
+	  		alert('Will update ' + prd_id);
+	  		//do update and refresh page
+	  		var v = $('#AMO-' + prd_id).val();
+	  		$.ajax({url:'/products',type:'put',data:{id:prd_id, amount:v}}).done(function(data){
+	  			//alert(data);
+	  			document.location = '/productList.html';
+	  		});
+
+	  	}
+	  });
+	});
+});
+</script>
+</head>
+<body>
+	<h1>Product List</h1><a href="/createProduct.html">Create...</a>
+</body>
+</html>
