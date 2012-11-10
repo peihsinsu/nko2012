@@ -24,8 +24,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-    returnURL: 'http://211.78.255.92:4000/auth/google/return',
-    realm: 'http://211.78.255.92:4000/'
+    returnURL: 'http://localhost:4000/auth/google/return', //IP address should change to your server's ip address
+    realm: 'http://localhost:4000/'
   },
   function(identifier, profile, done) {
     process.nextTick(function () {

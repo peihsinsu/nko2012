@@ -25,8 +25,8 @@ var script = {
   "C":
     function(){
       db.query(
-       'insert into tb_post (id, refer_topic_id, topic_title, post_body, create_user, create_date) values (2, ?,?,?,?,?)', //SQL command
-       [0, 'test title', 'test post body', 'simon', new Date()], //Conditions
+       'insert into tb_post (refer_topic_id, topic_title, post_body, create_user, create_date) values (?,?,?,?,?)', //SQL command
+       ['test id', 'test title', 'test post body', 'simon', new Date()], //Conditions
        function(err, rows, fiels) { //callback
          if(err) return console.log(JSON.stringify(err));
          console.log(rows);
